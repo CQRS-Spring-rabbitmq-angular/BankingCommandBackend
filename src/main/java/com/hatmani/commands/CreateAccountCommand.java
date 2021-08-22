@@ -2,22 +2,23 @@ package com.hatmani.commands;
 
 import java.math.BigDecimal;
 
-import com.hatmani.commands.enums.AccountStatusEnum;
+import com.hatmani.bankingEvent.StatusAcount;
+
 
 public class CreateAccountCommand extends BaseCommand<String> {
 	private BigDecimal initialbalance;
 	private String currency;
-	private AccountStatusEnum Status;
+	private StatusAcount Status;
 	
 
 
 
-	public AccountStatusEnum getStatus() {
+	public StatusAcount getStatus() {
 		return Status;
 	}
 
 
-	public void setStatus(AccountStatusEnum status) {
+	public void setStatus(StatusAcount status) {
 		Status = status;
 	}
 
@@ -33,7 +34,7 @@ public class CreateAccountCommand extends BaseCommand<String> {
 	 * @param currency
 	 * @param status
 	 */
-	public CreateAccountCommand(String id, BigDecimal initialbalance, String currency, AccountStatusEnum status) {
+	public CreateAccountCommand(String id, BigDecimal initialbalance, String currency, StatusAcount status) {
 		super(id);
 		this.initialbalance = initialbalance;
 		this.currency = currency;

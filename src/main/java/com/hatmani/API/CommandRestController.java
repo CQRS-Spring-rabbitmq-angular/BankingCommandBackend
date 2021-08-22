@@ -24,10 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hatmani.DTOS.AccountformDto;
 import com.hatmani.DTOS.OperationDto;
+import com.hatmani.bankingEvent.StatusAcount;
 import com.hatmani.commands.CreateAccountCommand;
 import com.hatmani.commands.CreditAccountCommand;
 import com.hatmani.commands.DebitAccountCommand;
-import com.hatmani.commands.enums.AccountStatusEnum;
+
 
 @RestController
 @RequestMapping("/commands/account")
@@ -50,7 +51,7 @@ public class CommandRestController {
 		
 return		commandgatway.send(new CreateAccountCommand(
 		UUID.randomUUID().toString(),account.getInitialbalance(), account.getCurrency()
-		,AccountStatusEnum.INACTIVE));
+		,StatusAcount.INACTIVE));
 	}
 	@PostMapping("/credit/{AccountId}")
 	public CompletableFuture<String> credit(@PathVariable String AccountId,@RequestBody OperationDto operation)

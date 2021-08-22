@@ -9,20 +9,17 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.stereotype.Service;
 
-import com.hatmani.commands.enums.AccountStatusEnum;
-import com.hatmani.commands.events.AccountActivetedEvent;
-import com.hatmani.commands.events.AccountCreatedEvent;
-import com.hatmani.commands.events.AccountCreditedEvent;
-import com.hatmani.commands.events.AccountDebitedEvent;
-import com.hatmani.commands.exception.SoldeInsuffisantException;
 
+
+import com.hatmani.commands.exception.SoldeInsuffisantException;
+import com.hatmani.bankingEvent.*;
 @Aggregate
 
 public class AccountAgregate {
 	@AggregateIdentifier
 private String AccountId;
 private BigDecimal Balance;
-private AccountStatusEnum Status;
+private StatusAcount Status;
 private String Currency;
 
 
@@ -39,7 +36,7 @@ public void on(AccountCreatedEvent event)
 	this.Balance =event.getInitialAccount();
 	this.Currency =event.getCurrency();
 	this.Status=event.getStatus();
-	AggregateLifecycle.apply(new AccountActivetedEvent(this.AccountId,AccountStatusEnum.ACTIVE));
+	AggregateLifecycle.apply(new AccountActivetedEvent(this.AccountId,StatusAcount.ACTIVE));
 }
 @EventSourcingHandler
 public void on(AccountActivetedEvent event)
@@ -93,10 +90,10 @@ public BigDecimal getBalance() {
 public void setBalance(BigDecimal balance) {
 	Balance = balance;
 }
-public AccountStatusEnum getStatus() {
+public StatusAcount getStatus() {
 	return Status;
 }
-public void setStatus(AccountStatusEnum status) {
+public void setStatus(StatusAcount status) {
 	Status = status;
 }
 public String getCurrency() {
