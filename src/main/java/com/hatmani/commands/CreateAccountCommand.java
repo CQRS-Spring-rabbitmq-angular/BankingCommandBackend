@@ -9,7 +9,7 @@ public class CreateAccountCommand extends BaseCommand<String> {
 	private BigDecimal initialbalance;
 	private String currency;
 	private StatusAcount Status;
-	
+	private String proprietaire;
 
 
 
@@ -34,11 +34,12 @@ public class CreateAccountCommand extends BaseCommand<String> {
 	 * @param currency
 	 * @param status
 	 */
-	public CreateAccountCommand(String id, BigDecimal initialbalance, String currency, StatusAcount status) {
+	public CreateAccountCommand(String id, BigDecimal initialbalance, String currency, StatusAcount status,String proprietaire) {
 		super(id);
 		this.initialbalance = initialbalance;
 		this.currency = currency;
 		Status = status;
+		this.proprietaire=proprietaire;
 	}
 
 
@@ -54,6 +55,16 @@ public class CreateAccountCommand extends BaseCommand<String> {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+
+	public String getProprietaire() {
+		return proprietaire;
+	}
+
+
+	public void setProprietaire(String proprietaire) {
+		this.proprietaire = proprietaire;
 	}
 
 	

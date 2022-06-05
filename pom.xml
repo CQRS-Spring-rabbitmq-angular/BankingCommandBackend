@@ -11,8 +11,8 @@
 	</parent>
 	<groupId>com.hatmani</groupId>
 	<artifactId>bankingCQRS-cmd2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>bankingCQRS-cmd2</name>
+	<version>1.0.1</version>
+	<name>bankingCQRS-cmd</name>
 	<description>CQRS project</description>
 	<properties>
 		<java.version>11</java.version>
@@ -65,6 +65,12 @@
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-starter</artifactId>
 			<version>4.5.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.axonframework</groupId>
+					<artifactId>axon-server-connector</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -86,10 +92,43 @@
     <artifactId>spring-rabbit</artifactId>
    
 </dependency> -->
+	
+	<dependency>
+			<groupId>com.hatmani</groupId>
+			<artifactId>CQRSevent</artifactId>
+			<version>2.2.1</version>
+			
+			
+		</dependency>
+	
 	</dependencies>
 
 	<build>
 		<plugins>
+		
+		
+			<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-install-plugin</artifactId>
+    <version>2.5.2</version>
+    <executions>
+        <execution>
+            <phase>initialize</phase>
+            <goals>
+                <goal>install-file</goal>
+            </goals>
+            <configuration>
+                <file>lib/CQRSevent-2.2.1.jar</file>
+                <groupId>com.hatmani</groupId>
+                <artifactId>CQRSevent</artifactId>
+                <version>2.2.1</version>
+                <packaging>jar</packaging>
+            </configuration>
+        </execution>
+    </executions>
+            </plugin> 
+
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

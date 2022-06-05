@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ import com.hatmani.commands.CreateAccountCommand;
 import com.hatmani.commands.CreditAccountCommand;
 import com.hatmani.commands.DebitAccountCommand;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/commands/account")
 
@@ -43,6 +44,20 @@ public class CommandRestController {
 	Exchange exchange;
 	@Autowired
 	RabbitTemplate rabittemplate;
+	
+	@PostMapping("/createAccount")
+	public ResponseEntity<CompletableFuture<String>> createAccount(@RequestBody AccountformDto account)
+	{
+		System.out.println("Create Command recived : "+account.toString());
+		//rabittemplate.convertAndSend(exchange.getName(),"Account.Created",account);
+		return new ResponseEntity<CompletableFuture<String>>(commandgatway.send(new CreateAccountCommand(
+		UUID.randomUUID().toString(),account.getInitialbalance(), account.getCurrency()
+		,StatusAcount.INACTIVE,account.getProprietaire())), HttpStatus.CREATED);
+		
+
+	}
+	//TODO remplacer par @PostMapping("/createAccount")
+	@Deprecated
 	@PostMapping("/create")
 	public CompletableFuture<String> create(@RequestBody AccountformDto account)
 	{
@@ -51,7 +66,7 @@ public class CommandRestController {
 		
 return		commandgatway.send(new CreateAccountCommand(
 		UUID.randomUUID().toString(),account.getInitialbalance(), account.getCurrency()
-		,StatusAcount.INACTIVE));
+		,StatusAcount.INACTIVE,account.getProprietaire()));
 	}
 	@PostMapping("/credit/{AccountId}")
 	public CompletableFuture<String> credit(@PathVariable String AccountId,@RequestBody OperationDto operation)
@@ -79,7 +94,12 @@ return		commandgatway.send(new CreateAccountCommand(
 		return new ResponseEntity<String>(exp.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	
+	@GetMapping("/ping")
+	public String ping()
+	{
+		System.out.println("ping Success ....");
+		return "Hello from command service";
+	}
 	
 	
 }

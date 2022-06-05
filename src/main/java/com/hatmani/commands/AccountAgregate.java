@@ -21,12 +21,19 @@ private String AccountId;
 private BigDecimal Balance;
 private StatusAcount Status;
 private String Currency;
-
+private String proprietaire;
 
 @CommandHandler
 public AccountAgregate(CreateAccountCommand command)
 {
-	AggregateLifecycle.apply(new AccountCreatedEvent(command.getId(),command.getInitialbalance(),command.getCurrency(),command.getStatus()));
+	AggregateLifecycle.apply(
+			new AccountCreatedEvent(
+					command.getId(),
+					command.getInitialbalance(),
+					command.getCurrency(),
+					command.getStatus(),
+					command.getProprietaire())
+			);
 
 }
 @EventSourcingHandler
@@ -36,6 +43,7 @@ public void on(AccountCreatedEvent event)
 	this.Balance =event.getInitialAccount();
 	this.Currency =event.getCurrency();
 	this.Status=event.getStatus();
+	this.proprietaire=event.getProprietaire();
 	AggregateLifecycle.apply(new AccountActivetedEvent(this.AccountId,StatusAcount.ACTIVE));
 }
 @EventSourcingHandler
@@ -101,6 +109,12 @@ public String getCurrency() {
 }
 public void setCurrency(String currency) {
 	Currency = currency;
+}
+public String getProprietaire() {
+	return proprietaire;
+}
+public void setProprietaire(String proprietaire) {
+	this.proprietaire = proprietaire;
 }
 
 }

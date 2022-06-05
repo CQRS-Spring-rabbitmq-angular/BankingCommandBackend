@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class AccountformDto  implements Serializable{
 private BigDecimal	initialbalance;
 private String currency;
+private String proprietaire;
 /**
  * 
  */
@@ -13,15 +14,15 @@ public AccountformDto() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-/**
- * @param initialbalance
- * @param currency
- */
-public AccountformDto(BigDecimal initialbalance, String currency) {
+
+public AccountformDto(BigDecimal initialbalance, String currency, String proprietaire) {
 	super();
 	this.initialbalance = initialbalance;
 	this.currency = currency;
+	this.proprietaire = proprietaire;
 }
+
+
 public BigDecimal getInitialbalance() {
 	return initialbalance;
 }
@@ -38,6 +39,12 @@ public String toString() {
 }
 public void setCurrency(String currency) {
 	this.currency = currency;
+}
+public String getProprietaire() {
+	return proprietaire;
+}
+public void setProprietaire(String proprietaire) {
+	this.proprietaire = proprietaire;
 }
 
 }
